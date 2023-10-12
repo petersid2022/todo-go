@@ -64,7 +64,7 @@ func NewEntry(name string, status bool, date string, filePath string) error {
 	}
 
 	data = append(data, newItem)
-    
+
 	if err := SaveJson(data, filePath); err != nil {
 		return err
 	}
@@ -91,6 +91,32 @@ func DeleteEntry(id int, filePath string) error {
 	}
 
 	data = append(data[:indextoremove], data[indextoremove+1:]...)
+
+	if err := SaveJson(data, filePath); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ToggleEntry(id int, filePath string) error {
+	data, err := GetJson(filePath)
+	if err != nil {
+		return err
+	}
+
+	for i, item := range data {
+		if item.Id == id {
+			if data[i].Status == true {
+				data[i].Status = false
+				break
+			}
+			if data[i].Status == false {
+				data[i].Status = true
+				break
+			}
+		}
+	}
 
 	if err := SaveJson(data, filePath); err != nil {
 		return err

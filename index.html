@@ -1,16 +1,17 @@
 <!doctype html>
 <html>
+
 <head>
     <title>todo</title>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
 </head>
+
 <body>
     <h1>TODO webapp written in Go and HTMX</h1>
-    <form hx-post="/submit" hx-swap="afterbegin #itemList">
+    <form hx-post="/submit" hx-target="closest tr">
         <input type="text" name="data" placeholder="Enter new todo name">
         <button type="submit">OK</button>
     </form>
-    <div id="itemList"></div>
     <table>
         <thead>
             <tr>
@@ -18,10 +19,13 @@
                 <th>Status</th>
                 <th>Added on</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody hx-confirm="Are you sure?" hx-target="closest tr">
             %s
+        </tbody>
     </table>
 </body>
+
 </html>
